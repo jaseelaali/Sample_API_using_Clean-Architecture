@@ -4,18 +4,17 @@ import (
 	"net/http"
 
 	"github.com/google/wire"
-	"github.com/jaseelaali/Sample_API_using_Clean-Architecture/database"
-	c "github.com/jaseelaali/Sample_API_using_Clean-Architecture/pkg/config"
-)
+	db "github.com/jaseelaali/Sample_API_using_Clean-Architecture/database"
+	config "github.com/jaseelaali/Sample_API_using_Clean-Architecture/pkg/config"
+)	
 
-func InitializeApi(config c.Config) (*http.ServerHTTP, error) {
+func InitializeAPI(cfg config.Config) (*http.ServerHTTP, error) {
 	wire.Build(
-		database.ConnectDatabase,
-		repository.NewRepository,
-		usecase.NewUsecase,
-		handler.NewHandler,
+		db.ConnectDatabase,
+		repository.NewUserRepository,
+		usecase.NewUserUseCase,
+		handler.NewUserHandler,
 		http.NewServerHTTP)
 
 	return &http.ServerHTTP{}, nil
-
 }
